@@ -7,12 +7,12 @@ import mimetypes
 # Get AWS access key and secret key from shell environment
 access_key = os.environ.get('AWS_ACCESS_KEY_ID')
 secret_key = os.environ.get('AWS_SECRET_ACCESS_KEY')
+default_bucket = os.environ.get('DEFAULT_BUCKET')
+
 
 # Create S3 client with the given access and secret keys
 s3 = boto3.client('s3', aws_access_key_id=access_key, aws_secret_access_key=secret_key)
 
-
-default_bucket = ''
 default_bucket_path = 'application/images'
 
 # Get the S3 bucket name
