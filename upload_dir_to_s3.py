@@ -11,13 +11,22 @@ def upload_to_aws(local_directory, bucket, target_folder, prefix):
     access_key = os.environ.get('AWS_ACCESS_KEY_ID')
     secret_key = os.environ.get('AWS_SECRET_ACCESS_KEY')
     s3 = boto3.client('s3', aws_access_key_id=access_key, aws_secret_access_key=secret_key)
+
     for root, dirs, files in os.walk(local_directory):
         for i, filename in enumerate(files):
-            local_path = os.path.join(root, filename)
-            relative_path = os.path.relpath(local_path, local_directory)
-            content_type = mimetypes.guess_type(local_path)[0]
+            if filename in ['.DS_Store']:
+                continue
+
+            try:
+                local_path = os.path.join(root, filename)
+                relative_path = os.path.relpath(local_path, local_directory)
+                content_type = mimetypes.guess_type(local_path)[0]
+            except:
+                print(f'An error occurred processing file "{filename}",')
+                raise
 
             s3_path = os.path.join(target_folder, prefix + '-' + str(i))
+            
             try:
                 s3.upload_file(local_path, bucket, s3_path, ExtraArgs={'ContentType': content_type})
                 url = f"https://s3.amazonaws.com/{bucket}/{s3_path}"
@@ -29,12 +38,21 @@ def upload_to_aws(local_directory, bucket, target_folder, prefix):
 
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='Upload files from local directory to S3')
-    parser.add_argument('--bucket_name', type=str, help='S3 bucket name', required=True)
-    parser.add_argument('--target_path', type=str, help='Target path in S3 bucket', required=True)
-    parser.add_argument('--local_directory', type=str, help='Local directory path', required=True)
-    parser.add_argument('--prefix', type=str, help='Prefix for renamed files', default='')
+    default_bucket = os.environ.get('DEFAULT_BUCKET')
+    default_bucket_path = 'application/images'
 
-    args = parser.parse_args()
+    # Get the S3 bucket name
+    bucket_name = input(f'Enter the name of the S3 bucket, press enter for default ("{default_bucket}")')
+    if not bucket_name:
+        bucket_name = default_bucket
 
-    upload_to_aws(args.local_directory, args.bucket_name, args.target_path, args.prefix)
+    bucket_path  = input(f'Enter the path to upload the file to, press enter for default ("{default_bucket_path}")')
+    if not bucket_path:
+        bucket_path = default_bucket_path
+
+    prefix  = input(f'Enter the prefix for new files (dash separated)')
+
+    # Get the path to the directory to upload
+    directory = input("Enter the path to the directory to upload: ")
+
+    upload_to_aws(directory, bucket_name, bucket_path, prefix)
