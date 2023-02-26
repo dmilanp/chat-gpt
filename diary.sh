@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# Check if DIARY_DIR environment variable is set
+if [[ -z "${DIARY_DIR}" ]]; then
+  echo "Error: DIARY_DIR environment variable is not defined."
+  exit 1
+fi
+
 # Get the current date in YYYY-MM-DD format
 datestamp=$(date +"%Y-%m-%d")
 timestamp=$(date +"%I:%M %p")
