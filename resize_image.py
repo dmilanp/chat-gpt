@@ -8,6 +8,7 @@ MAX_WIDTH = 2500  # Change this to your desired maximum width
 MAX_HEIGHT = 1600  # Change this to your desired maximum height
 
 def resize_image(input_path, output_path, max_width, max_height):
+    print(f'Processing file {output_path}')
     try:
         # Open the image file
         with Image.open(input_path) as img:
@@ -44,6 +45,10 @@ def process_directory(input_dir):
     for root, _, files in os.walk(input_dir):
         for file_name in files:
             input_path = os.path.join(root, file_name)
+
+            if '/resized/' in input_path:
+                continue
+                
             if file_name.lower().endswith(('.jpg', '.jpeg', '.png', '.gif', '.bmp')):
                 output_path = os.path.join(output_dir, file_name)
                 try:
