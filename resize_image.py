@@ -31,7 +31,15 @@ def resize_image(input_path, output_path, max_width, max_height):
 
             # Resize the image proportionally
             img.thumbnail((new_width, new_height))
-            img.save(output_path)
+
+            # Check the original image format
+            original_format = img.format
+            if original_format is None or original_format.lower() != "jpeg":
+                # Convert to JPEG format
+                img = img.convert("RGB")
+
+            # Save as JPEG
+            img.save(output_path, "JPEG")
             return True
 
     except Exception as e:
@@ -48,7 +56,7 @@ def process_directory(input_dir):
 
             if '/resized/' in input_path:
                 continue
-                
+
             if file_name.lower().endswith(('.jpg', '.jpeg', '.png', '.gif', '.bmp')):
                 output_path = os.path.join(output_dir, file_name)
                 try:
