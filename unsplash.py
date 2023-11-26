@@ -21,7 +21,8 @@ def main():
     args = parser.parse_args()
 
     # Generate a random directory name
-    directory_name = ''.join(random.choices(string.ascii_uppercase + string.digits, k=8))
+    base_path = '/Users/diegomilan/Desktop/'
+    directory_name = base_path + ''.join(random.choices(string.ascii_uppercase + string.digits, k=8))
     os.mkdir(directory_name)
 
     # Download the specified number of images from Unsplash

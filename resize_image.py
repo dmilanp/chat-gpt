@@ -87,8 +87,8 @@ if __name__ == "__main__":
             print(f"Error: {e}")
     elif os.path.isdir(input_path):
         # Process a directory
-        confirm = input(f"Do you want to resize all images in '{input_path}' and save them in a 'resized' folder? (yes/no): ").lower()
-        if confirm == "yes":
+        confirm = input(f"Do you want to resize all images in '{input_path}' and save them in a 'resized' folder? (y/n): ").lower()
+        if confirm == "y":
             process_directory(input_path)
         else:
             print("Operation canceled.")

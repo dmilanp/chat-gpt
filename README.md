@@ -1,8 +1,11 @@
 
-How to
 
-BUSINESS_NAME=casona_cedros
-BUSINESS_TYPE=hotel
+
+# inputs
+
+BUSINESS_NAME=sartoria/madonna
+BUSINESS_TYPE=restaurant
+
 TEMP_PATH="$BUSINESS_NAME/$BUSINESS_TYPE"
 TARGET_DIR="/Users/diegomilan/Desktop/luxtay_resources/businesses/$TEMP_PATH"
 echo $TARGET_DIR
