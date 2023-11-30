@@ -3,8 +3,9 @@
 
 # inputs
 
-BUSINESS_NAME=sartoria/madonna
-BUSINESS_TYPE=restaurant
+clear
+BUSINESS_NAME=villa_gracia
+BUSINESS_TYPE=room
 
 TEMP_PATH="$BUSINESS_NAME/$BUSINESS_TYPE"
 TARGET_DIR="/Users/diegomilan/Desktop/luxtay_resources/businesses/$TEMP_PATH"
